@@ -166,19 +166,23 @@ def main():
     Point d'entrée du script:
       - Lit les arguments de ligne de commande :
         1) L'URL de départ
-        2) Le nombre max de pages
+        2) (optionnel) Le nombre max de pages
       - Lance le crawl
       - Sauvegarde les résultats dans un fichier JSON
+      - Si aucun argument n'est fourni, utilise les valeurs par défaut :
+          URL de départ = "https://web-scraping.dev/products"
+          max_pages = 50
     """
-    # Gestion des arguments via sys.argv (ex : python main.py https://web-scraping.dev/products 50)
-    # On peut aussi utiliser argparse si on veut être plus propre.
-    if len(sys.argv) < 2:
-        print("Usage: python main.py <start_url> [max_pages]")
-        print("Exemple: python main.py https://web-scraping.dev/products 50")
-        sys.exit(1)
-
-    start_url = sys.argv[1]
-    max_pages = 50 if len(sys.argv) < 3 else int(sys.argv[2])
+    if len(sys.argv) == 1:
+        # Aucun argument => valeurs par défaut
+        print("Aucun argument fourni. Utilisation des paramètres par défaut :")
+        start_url = "https://web-scraping.dev/products"
+        max_pages = 50
+    else:
+        # start_url = 1er argument, sinon défaut
+        start_url = sys.argv[1] if len(sys.argv) > 1 else "https://web-scraping.dev/products"
+        # max_pages = 2e argument, sinon défaut
+        max_pages = int(sys.argv[2]) if len(sys.argv) > 2 else 50
 
     # Lancement du crawl
     data_crawled = crawl_site(start_url, max_pages)
