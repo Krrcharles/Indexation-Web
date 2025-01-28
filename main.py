@@ -8,11 +8,13 @@ from bs4 import BeautifulSoup
 from collections import deque
 import sys
 
+
 def fetch_url_content(url, delay=1):
     """
     Récupère le contenu HTML d'une URL via urllib.
     Retourne le HTML sous forme d'octets ou None en cas d'erreur.
     """
+    time.sleep(delay)
     try:
         with urllib.request.urlopen(url) as response:
             return response.read()
@@ -22,6 +24,7 @@ def fetch_url_content(url, delay=1):
         print(f"[URLError] {url} : {e.reason}")
     return None
 
+
 def get_base_url(url):
     """
     Retourne la base de l'URL (protocole + nom de domaine).
@@ -29,6 +32,7 @@ def get_base_url(url):
     """
     parsed_url = urlparse(url)
     return f"{parsed_url.scheme}://{parsed_url.netloc}"
+
 
 def can_crawl(url, user_agent="MyCrawler"):
     """
@@ -49,6 +53,7 @@ def can_crawl(url, user_agent="MyCrawler"):
         return True
 
     return rp.can_fetch(user_agent, url)
+
 
 def parse_html(html_content, page_url):
     """
@@ -83,6 +88,7 @@ def parse_html(html_content, page_url):
         "first_paragraph": first_paragraph,
         "links": links,
     }
+
 
 def crawl_site(start_url, max_pages=50):
     """
@@ -146,12 +152,14 @@ def crawl_site(start_url, max_pages=50):
     print(f"Fin du crawling. {pages_visited} pages visitées.")
     return results
 
+
 def save_to_json(data, filename="results.json"):
     """
     Sauvegarde 'data' (une liste ou un dict) dans un fichier JSON.
     """
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+
 
 def main():
     """
@@ -178,6 +186,7 @@ def main():
     # Sauvegarde en JSON
     save_to_json(data_crawled, "results.json")
     print("Les résultats ont été enregistrés dans 'results.json'.")
+
 
 if __name__ == "__main__":
     main()
