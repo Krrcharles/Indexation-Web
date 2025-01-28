@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from collections import deque
 import sys
 
-def fetch_url_content(url):
+def fetch_url_content(url, delay=1):
     """
     Récupère le contenu HTML d'une URL via urllib.
     Retourne le HTML sous forme d'octets ou None en cas d'erreur.
@@ -21,14 +21,6 @@ def fetch_url_content(url):
     except URLError as e:
         print(f"[URLError] {url} : {e.reason}")
     return None
-
-def polite_fetch_url_content(url, delay=1):
-    """
-    Fait une requête HTTP sur l'URL avec un délai (politesse).
-    Retourne le HTML (en octets), ou None en cas d'échec.
-    """
-    time.sleep(delay)  # Respect d'un délai entre les requêtes
-    return fetch_url_content(url)
 
 def get_base_url(url):
     """
@@ -129,7 +121,7 @@ def crawl_site(start_url, max_pages=50):
             continue
 
         # Télécharger le contenu HTML
-        html = polite_fetch_url_content(current_url, delay=1)
+        html = fetch_url_content(current_url, delay=1)
         if html is None:
             visited.add(current_url)
             continue
@@ -170,11 +162,11 @@ def main():
       - Lance le crawl
       - Sauvegarde les résultats dans un fichier JSON
     """
-    # Gestion des arguments via sys.argv (ex : python crawler.py https://web-scraping.dev/products 50)
+    # Gestion des arguments via sys.argv (ex : python main.py https://web-scraping.dev/products 50)
     # On peut aussi utiliser argparse si on veut être plus propre.
     if len(sys.argv) < 2:
-        print("Usage: python crawler.py <start_url> [max_pages]")
-        print("Exemple: python crawler.py https://web-scraping.dev/products 50")
+        print("Usage: python main.py <start_url> [max_pages]")
+        print("Exemple: python main.py https://web-scraping.dev/products 50")
         sys.exit(1)
 
     start_url = sys.argv[1]
