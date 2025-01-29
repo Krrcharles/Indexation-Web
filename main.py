@@ -56,13 +56,6 @@ def can_crawl(url, user_agent="MyCrawler"):
 
 
 def parse_html(html_content, page_url):
-    """
-    Parse le contenu HTML d'une page pour extraire :
-      - le titre
-      - le premier paragraphe
-      - tous les liens internes
-    Retourne un dict contenant ces informations.
-    """
     soup = BeautifulSoup(html_content, "html.parser")
 
     # 1. Récupérer le titre
@@ -71,20 +64,17 @@ def parse_html(html_content, page_url):
 
     # 2. Récupérer le premier paragraphe
     first_p_tag = soup.find("p")
-    first_paragraph = first_p_tag.get_text(strip=True) if first_p_tag else "No paragraph"
+    first_paragraph = first_p_tag.get_text(strip=True) if first_p_tag else ""
 
-    # 3. Récupérer les liens (avec leur source)
+    # 3. Récupérer les liens : juste des chaînes (sans la provenance)
     links = []
     for a_tag in soup.find_all("a", href=True):
         absolute_url = urljoin(page_url, a_tag["href"])
-        links.append({
-            "link": absolute_url,
-            "source": page_url
-        })
+        links.append(absolute_url)
 
     return {
-        "url": page_url,
         "title": title,
+        "url": page_url,
         "first_paragraph": first_paragraph,
         "links": links,
     }
