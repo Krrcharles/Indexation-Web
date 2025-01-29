@@ -28,7 +28,6 @@ def fetch_url_content(url, delay=1):
 def get_base_url(url):
     """
     Retourne la base de l'URL (protocole + nom de domaine).
-    Exemple : https://exemple.com
     """
     parsed_url = urlparse(url)
     return f"{parsed_url.scheme}://{parsed_url.netloc}"
@@ -48,7 +47,7 @@ def can_crawl(url, user_agent="MyCrawler"):
     try:
         rp.read()
     except:
-        # En cas de problème (robots.txt introuvable, inaccessible),
+        # En cas de robots.txt introuvable/inaccessible,
         # on autorise par défaut le crawl.
         return True
 
@@ -56,6 +55,10 @@ def can_crawl(url, user_agent="MyCrawler"):
 
 
 def parse_html(html_content, page_url):
+    """
+    Extrait le titre, le premier paragraphe et les liens d'une page HTML.
+    Retourne un dictionnaire avec ces informations.
+    """
     soup = BeautifulSoup(html_content, "html.parser")
 
     # 1. Récupérer le titre
@@ -66,11 +69,8 @@ def parse_html(html_content, page_url):
     first_p_tag = soup.find("p")
     first_paragraph = first_p_tag.get_text(strip=True) if first_p_tag else ""
 
-    # 3. Récupérer les liens : juste des chaînes (sans la provenance)
-    links = []
-    for a_tag in soup.find_all("a", href=True):
-        absolute_url = urljoin(page_url, a_tag["href"])
-        links.append(absolute_url)
+    # 3. Récupérer les liens
+    links = [urljoin(page_url, a_tag["href"]) for a_tag in soup.find_all("a", href=True)]
 
     return {
         "title": title,
@@ -87,7 +87,7 @@ def crawl_site(start_url, max_pages=50):
     Retourne la liste des résultats (un dict par page visitée).
     """
     visited = set()               # Pour éviter de revisiter les mêmes URLs
-    product_queue = deque()       # File d'attente haute priorité (URL contenant 'product')
+    product_queue = deque()       # File d'attente contenant 'product'
     normal_queue = deque()        # File d'attente normale
 
     # Ajoute l'URL de départ dans la file appropriée
@@ -131,8 +131,7 @@ def crawl_site(start_url, max_pages=50):
         print(f"[INFO] Visited: {current_url} (Total: {pages_visited})")
 
         # Ajouter les nouveaux liens trouvés
-        for link_dict in page_data["links"]:
-            link_url = link_dict["link"]
+        for link_url in page_data["links"]:  # Correction ici
             if link_url not in visited:
                 if "product" in link_url:
                     product_queue.append(link_url)
@@ -145,7 +144,7 @@ def crawl_site(start_url, max_pages=50):
 
 def save_to_json(data, filename="results.json"):
     """
-    Sauvegarde 'data' (une liste ou un dict) dans un fichier JSON.
+    Sauvegarde 'data' dans un fichier JSON.
     """
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
@@ -156,7 +155,7 @@ def main():
     Point d'entrée du script:
       - Lit les arguments de ligne de commande :
         1) L'URL de départ
-        2) (optionnel) Le nombre max de pages
+        2) Le nombre max de pages
       - Lance le crawl
       - Sauvegarde les résultats dans un fichier JSON
       - Si aucun argument n'est fourni, utilise les valeurs par défaut :
