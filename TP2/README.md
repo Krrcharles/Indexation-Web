@@ -83,7 +83,7 @@ Example:
 ### Features Index
 
 - **Output Folder**: `output/features/`
-- **Files**: One JSON file per discovered feature, named `feature_<featureName>.json` (e.g., `feature_brand.json`).
+- **Files**: One JSON file per discovered feature in the whole jsonl file , named `feature_<featureName>.json` (e.g., `feature_brand.json`).
 - **Structure**: A dictionary keyed by the feature value, mapping to a list of URLs (or IDs) where that feature value occurs.
 
 Example (`feature_brand.json`):
