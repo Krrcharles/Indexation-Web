@@ -122,7 +122,8 @@ python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
    ```
 3. Run the script:
    ```sh
-   python TP2/main.py
+   cd TP2
+   python main.py
    ```
 4. Check the `output/` folder for results.
 

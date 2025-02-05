@@ -69,7 +69,7 @@ def enrich_docs_with_product_info(docs):
     return docs
 
 
-def tokenize_and_clean(text):
+def tokenize(text):
     """
     Tokenize the text, convert it to lowercase,
     remove punctuation and stopwords.
@@ -101,7 +101,7 @@ def build_inverted_index(docs, field_name):
         url = doc.get("url", "")
         field_content = doc.get(field_name, "")
         
-        tokens = tokenize_and_clean(field_content)
+        tokens = tokenize(field_content)
         unique_tokens = set(tokens)
         
         for token in unique_tokens:
