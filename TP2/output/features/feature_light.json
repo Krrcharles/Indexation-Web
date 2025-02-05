@@ -1,0 +1,14 @@
+{
+  "LED lights in the outsole": [
+    "https://web-scraping.dev/product/10",
+    "https://web-scraping.dev/product/10?variant=blue-5",
+    "https://web-scraping.dev/product/10?variant=blue-6",
+    "https://web-scraping.dev/product/10?variant=red-5",
+    "https://web-scraping.dev/product/10?variant=red-6",
+    "https://web-scraping.dev/product/22",
+    "https://web-scraping.dev/product/22?variant=blue-5",
+    "https://web-scraping.dev/product/22?variant=blue-6",
+    "https://web-scraping.dev/product/22?variant=red-5",
+    "https://web-scraping.dev/product/22?variant=red-6"
+  ]
+}

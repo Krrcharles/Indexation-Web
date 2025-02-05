@@ -1,0 +1,25 @@
+{
+  "Available in Orange and Cherry flavors": [
+    "https://web-scraping.dev/product/1",
+    "https://web-scraping.dev/product/13",
+    "https://web-scraping.dev/product/13?variant=cherry-large",
+    "https://web-scraping.dev/product/13?variant=cherry-medium",
+    "https://web-scraping.dev/product/13?variant=cherry-small",
+    "https://web-scraping.dev/product/13?variant=orange-large",
+    "https://web-scraping.dev/product/13?variant=orange-medium",
+    "https://web-scraping.dev/product/13?variant=orange-small",
+    "https://web-scraping.dev/product/1?variant=cherry-large",
+    "https://web-scraping.dev/product/1?variant=cherry-medium",
+    "https://web-scraping.dev/product/1?variant=cherry-small",
+    "https://web-scraping.dev/product/1?variant=orange-large",
+    "https://web-scraping.dev/product/1?variant=orange-medium",
+    "https://web-scraping.dev/product/1?variant=orange-small",
+    "https://web-scraping.dev/product/25",
+    "https://web-scraping.dev/product/25?variant=cherry-large",
+    "https://web-scraping.dev/product/25?variant=cherry-medium",
+    "https://web-scraping.dev/product/25?variant=cherry-small",
+    "https://web-scraping.dev/product/25?variant=orange-large",
+    "https://web-scraping.dev/product/25?variant=orange-medium",
+    "https://web-scraping.dev/product/25?variant=orange-small"
+  ]
+}
