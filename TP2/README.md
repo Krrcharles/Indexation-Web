@@ -1,25 +1,7 @@
 # Web Indexation Project (ENSAI 2025)
 
-This project demonstrates how to parse a set of e-commerce product data from a JSONL file and build various indexes for search engine purposes. Below is a detailed overview of the code structure, the indexes produced, the implementation choices, additional features, usage examples, and instructions on how to run the code.
-
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Indexes Structure](#indexes-structure)
-  - [Title Positional Index](#title-positional-index)
-  - [Description Positional Index](#description-positional-index)
-  - [Reviews Index](#reviews-index)
-  - [Features Index](#features-index)
-- [Implementation Choices](#implementation-choices)
-- [Additional Features](#additional-features)
-- [Usage Examples](#usage-examples)
-- [How to Run the Code](#how-to-run-the-code)
-  - [Requirements](#requirements)
-  - [Steps to Execute](#steps-to-execute)
-
 ## Project Overview
-
-The main goal of this project is to prepare a search engine for e-commerce products by creating several indexes from a JSONL data source. Each line in the `products.jsonl` file corresponds to one product document, containing:
+Each line in the `products.jsonl` file corresponds to one product document, containing:
 
 - URL of the product or products page
 - Title
@@ -117,40 +99,6 @@ Example (`feature_brand.json`):
 }
 ```
 
-## Implementation Choices
-
-- **Single Responsibility Functions**
-  - Each function handles exactly one concern:
-    - Reading JSONL files (`read_jsonl_file`).
-    - Extracting product_id and variant (`get_product_id_and_variant`).
-    - Building positional indexes (`build_positional_inverted_index`).
-    - Summarizing reviews (`get_reviews_summary`).
-    - Building feature indexes (`build_feature_indexes`).
-    - Saving dictionaries to JSON (`save_dict_to_json`).
-
-## Additional Features
-
-- **Date-Based Last Rating**: Parses dates in `YYYY-MM-DD` format to determine the most recent review.
-- **Flexible Identifier**: Can store either URLs or product_ids in indexes.
-- **Directory Creation**: The script ensures `output/` and `output/features/` exist before saving files.
-
-## Usage Examples
-
-After running the script with `products.jsonl`, you'll see:
-```sh
-$ python indexation.py
-Created 'output/title_position_index.json'
-Created 'output/description_position_index.json'
-Created 'output/reviews_index.json'
-Created 'output/features/feature_brand.json'
-...
-```
-
-To inspect results:
-```sh
-cat output/reviews_index.json
-```
-
 ## How to Run the Code
 
 ### Requirements
@@ -174,7 +122,7 @@ python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
    ```
 3. Run the script:
    ```sh
-   python indexation.py
+   python TP2/main.py
    ```
 4. Check the `output/` folder for results.
 
