@@ -12,7 +12,6 @@ from nltk.corpus import stopwords
 # 1) FILE LOADING FUNCTIONS
 #############################
 
-
 def load_json(file_path):
     """
     Loads a JSON file and returns the corresponding dictionary.
@@ -86,7 +85,6 @@ def load_all_files():
 # 2) TOKENIZATION & EXPANSION
 ##################################
 
-
 def tokenize(text):
     """
     Tokenizes the input text:
@@ -131,7 +129,6 @@ def expand_query_tokens(tokens, synonyms_dict):
 #############################
 # 3) DOCUMENT FILTERING FUNCTIONS
 #############################
-
 
 def get_documents_for_token(token, indexes):
     """
@@ -203,43 +200,77 @@ def filter_documents(query, indexes, synonyms_dict, mode="ANY"):
 # 4) BM25 & SCORING
 #############################
 
+# --- Anciennes fonctions BM25 (get_term_frequency, compute_idf) ---
+# Elles ne sont plus utilisées dans le calcul BM25 par champ.
+# On définit ci-dessous des fonctions dédiées au calcul BM25 par champ.
 
-def build_doc_lengths(products_data):
+def compute_field_idf(token, field_index, N):
     """
-    Constructs a dictionary mapping document URLs to the number of tokens
-    (title + description) based on raw product data.
+    Calcule l'IDF (logarithmique, base 2) pour un token dans un index spécifique de champ.
+    IDF_field(t) = log((N - n_t + 0.5) / (n_t + 0.5), base 2)
+    
+    field_index: l'index du champ (dictionnaire token -> [documents] ou token -> dict(doc_url -> positions))
+    N: nombre total de documents (pour ce champ)
     """
-    doc_lengths = {}
-    for product in products_data:
-        url = product["url"]
-        title = product.get("title", "")
-        description = product.get("description", "")
+    if token not in field_index:
+        return 0.0
+    value = field_index[token]
+    if isinstance(value, dict):
+        n_t = len(value)
+    elif isinstance(value, list):
+        n_t = len(value)
+    else:
+        n_t = 0
+    if n_t == 0:
+        return 0.0
+    return math.log((N - n_t + 0.5) / (n_t + 0.5), 2)
+
+
+def bm25_field_score(doc_url, tokens, field, field_index, doc_field_lengths, avgdl_field, k=1.2, b=0.75):
+    """
+    Calcule la contribution BM25 pour un document (doc_url) dans un champ donné.
+    
+    - tokens: liste de tokens de la requête.
+    - field: nom du champ (ex. "title", "description", etc.).
+    - field_index: index spécifique au champ.
+    - doc_field_lengths: dictionnaire {doc_url: longueur_du_champ (en tokens)}.
+    - avgdl_field: longueur moyenne du champ.
+    
+    Retourne la somme des contributions BM25 pour ce champ.
+    """
+    score = 0.0
+    N = len(doc_field_lengths)
+    
+    for t in tokens:
+        idf = compute_field_idf(t, field_index, N)
         
-        combined_text = title + " " + description
-        tokens = tokenize(combined_text)  # Reusing the tokenize function
-        doc_lengths[url] = len(tokens)
-    
-    return doc_lengths
+        # Récupérer la fréquence du token dans ce champ pour le document
+        freq = 0
+        if t in field_index:
+            value = field_index[t]
+            if isinstance(value, dict):
+                freq = len(value.get(doc_url, []))
+            elif isinstance(value, list):
+                freq = 1 if doc_url in value else 0
+        
+        doc_len = doc_field_lengths.get(doc_url, 0)
+        numerator = freq * (k + 1)
+        denominator = freq + k * (1 - b + b * (doc_len / avgdl_field)) if avgdl_field > 0 else freq + k
+        if denominator != 0:
+            score += idf * (numerator / denominator)
+    return score
 
 
-def get_term_frequency(token, doc_url, indexes):
+def bm25_score(doc_url, tokens, indexes, products_data, k=1.2, b=0.75):
     """
-    Computes the weighted frequency of a token in a document (doc_url),
-    considering different index structures.
+    Calcule le score BM25 pour un document (doc_url) en sommant les scores BM25
+    calculés séparément pour chaque champ, puis en les pondérant.
     
-    indexes: Dictionary with the following structure:
-      {
-        "title":       dict(token -> dict(doc_url -> [positions])),
-        "description": dict(token -> dict(doc_url -> [positions])),
-        "brand":       dict(token -> list(doc_url)) OR dict(token -> dict(doc_url -> [positions])),
-        "origin":      dict(token -> list(doc_url)),
-        "domain":      dict(token -> list(doc_url))
-      }
-    
-    Returns a float: the sum of frequencies in each field weighted accordingly.
+    - indexes: dictionnaire des index par champ.
+    - products_data: liste complète des produits (pour construire les longueurs de champ pour title et description).
     """
-    
-    # Define weights for each field
+    total_score = 0.0
+    # Poids par champ (vous pouvez les ajuster si nécessaire)
     field_weights = {
         "title": 2.0,
         "description": 1.0,
@@ -248,85 +279,28 @@ def get_term_frequency(token, doc_url, indexes):
         "domain": 1.0
     }
     
-    freq_total = 0.0
-    
-    # Iterate through each indexed field
+    # Pour chaque champ de l'index, calculer le BM25 spécifique au champ
     for field, field_index in indexes.items():
-        if token not in field_index:
-            continue  # Skip if token is not in index
-        
-        value = field_index[token]  # Value can be dict or list
-        
-        if isinstance(value, dict):
-            # Case: dict(doc_url -> [positions])
-            freq = len(value.get(doc_url, []))
-        elif isinstance(value, list):
-            # Case: list of doc_url
-            freq = 1 if doc_url in value else 0
+        # Pour les champs textuels présents dans products_data, calculer la longueur en token
+        if field in ["title", "description"]:
+            doc_field_lengths = {}
+            for product in products_data:
+                url = product["url"]
+                text = product.get(field, "")
+                tokens_field = tokenize(text)
+                doc_field_lengths[url] = len(tokens_field)
         else:
-            freq = 0  # Unexpected format
+            # Pour les autres champs (brand, origin, domain), on suppose une longueur par défaut de 1
+            doc_field_lengths = {product["url"]: 1 for product in products_data}
         
-        weight = field_weights.get(field, 1.0)  # Apply field weight
-        freq_total += freq * weight
-    
-    return freq_total
-
-
-def compute_idf(token, indexes, N):
-    """
-    Computes the BM25-style IDF score:
-    IDF(t) = log((N - n_t + 0.5) / (n_t + 0.5), base 2).
-    
-    indexes: Dictionary of indexes with various token mappings.
-    N: Total number of documents.
-    
-    Returns the computed IDF score for the given token.
-    """
-    doc_set = set()
-    
-    # Iterate through indexed fields
-    for field_name, field_index in indexes.items():
-        if token in field_index:
-            value = field_index[token]
-            
-            if isinstance(value, dict):
-                doc_set.update(value.keys())  # Add URLs (keys)
-            elif isinstance(value, list):
-                doc_set.update(value)  # Add URLs directly
-            else:
-                print(f"[WARN] Unexpected format in compute_idf for '{field_name}' / '{token}': {type(value)}")
-    
-    n_t = len(doc_set)  # Number of documents containing the token
-    if n_t == 0:
-        return 0.0
-    
-    return math.log((N - n_t + 0.5) / (n_t + 0.5), 2)
-
-
-def bm25_score(doc_url, tokens, indexes, doc_lengths, avgdl, k=1.2, b=0.75):
-    """
-    Computes the BM25 score for a given document (doc_url) based on a list of tokens.
-    """
-    score = 0.0
-    N = len(doc_lengths)
-    doc_len = doc_lengths.get(doc_url, 0)
-    
-    for t in tokens:
-        idf_t = compute_idf(t, indexes, N)
-        freq_t = get_term_frequency(t, doc_url, indexes)
+        total_length = sum(doc_field_lengths.values())
+        count_docs = len(doc_field_lengths)
+        avgdl_field = total_length / count_docs if count_docs > 0 else 0
         
-        numerator = freq_t * (k + 1)
-        denominator = freq_t + k * (1 - b + b * (doc_len / avgdl))
-        partial = 0.0
-        if denominator != 0:
-            partial = idf_t * (numerator / denominator)
-        score += partial
-    
-    return score
-
-#############################
-# 5) ADDITIONAL SIGNALS
-#############################
+        bm25_field = bm25_field_score(doc_url, tokens, field, field_index, doc_field_lengths, avgdl_field, k, b)
+        weight = field_weights.get(field, 1.0)
+        total_score += weight * bm25_field
+    return total_score
 
 
 def get_review_bonus(doc_url, reviews_index, max_bonus=1.0):
@@ -355,29 +329,30 @@ def is_exact_title_match(doc_url, query_tokens, products_info):
     return (title_tokens == query_tokens_set) and len(title_tokens) > 0
 
 
-def compute_final_score(doc_url, query_tokens, indexes, doc_lengths, avgdl,
+def compute_final_score(doc_url, query_tokens, indexes, products_data,
                         reviews_index, products_info,
-                        alpha=1.0, beta=0.3, gamma=1.0):
+                        alpha=1.0, beta=0.3, gamma=1.0, k=1.2, b=0.75):
     """
     Computes the final ranking score:
     final_score = (alpha * BM25) + (beta * review_bonus) + (gamma * exact_match_indicator)
     
-    - alpha, beta, gamma are configurable weights.
+    - BM25 est maintenant la somme pondérée des BM25 par champ.
+    - products_data: liste complète des produits (pour le calcul BM25 par champ).
+    - products_info: dictionnaire {doc_url: {title:..., description:...}} utilisé pour le matching exact.
     """
-    bm25_val = bm25_score(doc_url, query_tokens, indexes, doc_lengths, avgdl)
+    bm25_val = bm25_score(doc_url, query_tokens, indexes, products_data, k, b)
     review_b = get_review_bonus(doc_url, reviews_index, max_bonus=1.0)
     exact_m = 1.0 if is_exact_title_match(doc_url, query_tokens, products_info) else 0.0
     
     final = alpha * bm25_val + beta * review_b + gamma * exact_m
     return final
 
-
 #############################
-# 6) DOCUMENT RANKING FUNCTION
+# 5) DOCUMENT RANKING FUNCTION
 #############################
 
-def rank_documents(query, indexes, reviews_index, products_data_dict,
-                   doc_lengths, avgdl, synonyms_dict, mode="ANY"):
+def rank_documents(query, indexes, reviews_index, products_info, products_data,
+                   synonyms_dict, mode="ANY"):
     """
     Ranks documents based on the query:
     1) Filters documents using (ANY or ALL) logic.
@@ -396,13 +371,14 @@ def rank_documents(query, indexes, reviews_index, products_data_dict,
             doc_url=doc_url,
             query_tokens=query_tokens,
             indexes=indexes,
-            doc_lengths=doc_lengths,
-            avgdl=avgdl,
+            products_data=products_data,
             reviews_index=reviews_index,
-            products_info=products_data_dict,
+            products_info=products_info,
             alpha=1.0,     # BM25 weight
             beta=0.3,      # Review score weight
-            gamma=1.0      # Exact match weight
+            gamma=1.0,     # Exact match weight
+            k=1.2,
+            b=0.75
         )
         results.append((doc_url, score))
     
@@ -411,34 +387,18 @@ def rank_documents(query, indexes, reviews_index, products_data_dict,
     return results
 
 #############################
-# 7) SEARCH RESULT JSON GENERATION
+# 6) SEARCH RESULT JSON GENERATION
 #############################
-
 
 def produce_search_results_json(query, indexes, reviews_index,
                                 products_list, synonyms_dict,
                                 mode="ANY"):
     """
     Generates a JSON output containing ranked search results:
-    1) Computes document lengths and average document length.
-    2) Prepares a dictionary {url: {title:..., description:...}} for fast access.
-    3) Ranks the documents.
-    4) Constructs the final JSON output.
+    1) Prepares a dictionary {url: {title:..., description:...}} for fast access.
+    2) Ranks the documents.
+    3) Constructs the final JSON output.
     """
-    # Compute document lengths and average document length
-    doc_lengths = build_doc_lengths(products_list)
-    total_docs = len(doc_lengths)
-    if total_docs == 0:
-        return {
-            "metadata": {
-                "total_documents": 0,
-                "filtered_documents": 0,
-                "query": query
-            },
-            "results": []
-        }
-    avgdl = sum(doc_lengths.values()) / total_docs
-    
     # Prepare dictionary for quick lookup of title and description
     products_data_dict = {}
     for p in products_list:
@@ -449,14 +409,13 @@ def produce_search_results_json(query, indexes, reviews_index,
     
     # Rank documents based on query
     ranked_results = rank_documents(query, indexes, reviews_index,
-                                    products_data_dict, doc_lengths, avgdl,
-                                    synonyms_dict, mode)
+                                    products_data_dict, products_list, synonyms_dict, mode)
     
     # Construct final JSON structure
     docs_filtered = len(ranked_results)
     output = {
         "metadata": {
-            "total_documents": total_docs,
+            "total_documents": len(products_list),
             "filtered_documents": docs_filtered,
             "query": query
         },
@@ -477,9 +436,8 @@ def produce_search_results_json(query, indexes, reviews_index,
         
     return output
 
-
 #############################
-# 8) MAIN TEST SCRIPT
+# 7) MAIN TEST SCRIPT
 #############################
 
 if __name__ == "__main__":
