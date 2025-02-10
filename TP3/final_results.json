@@ -1,0 +1,309 @@
+{
+  "metadata": {
+    "total_documents": 156,
+    "filtered_documents": 50,
+    "query": "chocolate from usa"
+  },
+  "results": [
+    {
+      "url": "https://web-scraping.dev/product/13?variant=orange-large",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 11.361942776769023
+    },
+    {
+      "url": "https://web-scraping.dev/product/25?variant=orange-small",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 11.361942776769023
+    },
+    {
+      "url": "https://web-scraping.dev/product/1",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/1?variant=cherry-large",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/13?variant=cherry-small",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/25?variant=orange-large",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/25?variant=cherry-small",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/1?variant=cherry-medium",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/13?variant=orange-small",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/25",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/1?variant=orange-medium",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 9.367679146318167
+    },
+    {
+      "url": "https://web-scraping.dev/product/1?variant=orange-small",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/25?variant=orange-medium",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/13?variant=orange-medium",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/13",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/13?variant=cherry-large",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/1?variant=cherry-small",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/1?variant=orange-large",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/13?variant=cherry-medium",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/25?variant=cherry-medium",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/25?variant=cherry-large",
+      "title": "Box of Chocolate Candy",
+      "description": "Indulge your sweet tooth with our Box of Chocolate Candy. Each box contains an assortment of rich, flavorful chocolates with a smooth, creamy filling. Choose from a variety of flavors including zesty orange and sweet cherry. Whether you're looking for the perfect gift or just want to treat yourself, our Box of Chocolate Candy is sure to satisfy.",
+      "score": 8.368326906084754
+    },
+    {
+      "url": "https://web-scraping.dev/product/18?variant=six-pack",
+      "title": "Dragon Energy Potion",
+      "description": "Fuel your gaming prowess with our 'Dragon Potion', an energy drink for those who dare to take on the greatest challenges. Packed with a fiery tropical flavor and a potent energy blend, this potion sets the stage for epic gaming sessions. Embrace the spirit of the dragon - play hard, play long.",
+      "score": 2.2792636304508553
+    },
+    {
+      "url": "https://web-scraping.dev/product/26?variant=six-pack",
+      "title": "Dark Red Energy Potion",
+      "description": "Unleash the power within with our 'Dark Red Potion', an energy drink as intense as the games you play. Its deep red color and bold cherry cola flavor are as inviting as they are invigorating. Bring out the best in your gaming performance, and unlock your full potential.",
+      "score": 2.2792636304508553
+    },
+    {
+      "url": "https://web-scraping.dev/product/5?variant=one",
+      "title": "Blue Energy Potion",
+      "description": "Ignite your gaming sessions with our 'Blue Energy Potion', a premium energy drink crafted for dedicated gamers. Inspired by the classic video game potions, this energy drink provides a much-needed boost to keep you focused and energized. It's more than just an energy drink - it's an ode to the gaming culture, packaged in an aesthetically pleasing potion-like bottle that'll make you feel like you're in your favorite game world. Drink up and game on!",
+      "score": 2.2702636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/7?variant=9",
+      "title": "Hiking Boots for Outdoor Adventures",
+      "description": "Gear up for your next outdoor adventure with these durable and comfortable hiking boots. These boots are designed to handle all types of terrain, from rocky trails to muddy paths. They feature a waterproof upper, a rugged outsole for excellent traction, and a cushioned insole for maximum comfort. The mixed-color design adds a stylish touch to these practical boots. Get ready to conquer the great outdoors with our Hiking Boots for Outdoor Adventures.",
+      "score": 2.2702636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=grey-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=sand-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=pink-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=darkgrey-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=darkgrey-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/10",
+      "title": "Kids' Light-Up Sneakers",
+      "description": "Make your child's every step magical with these fun and vibrant light-up sneakers. The shoes feature colorful LED lights embedded in the sole that illuminate with each stride, creating an enchanting visual display. Made with breathable materials and a cushioned footbed, these sneakers ensure comfort for active play. Let your little one's personality shine with these exciting and playful shoes.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=grey-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=pink-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=grey-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=pink-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/21",
+      "title": "Running Shoes for Men",
+      "description": "Stay comfortable during your runs with our Men's Running Shoes. Featuring a breathable upper and a cushioned midsole, these shoes provide excellent ventilation and shock absorption. The durable outsole offers solid traction, ensuring stability even on slippery surfaces. With a sleek design and various color options, you can hit the road or the treadmill in style.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=darkgrey-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/20",
+      "title": "Women's High Heel Sandals",
+      "description": "Step out in style with our Women's High Heel Sandals. These sandals feature a strappy design that adds a touch of elegance to any outfit. The comfortable footbed and sturdy heel make them perfect for a night out, while the buckle closure ensures a secure fit. Choose from black, red, nude, or silver to complement your wardrobe.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/22?variant=blue-6",
+      "title": "Kids' Light-Up Sneakers",
+      "description": "Make your child's every step magical with these fun and vibrant light-up sneakers. The shoes feature colorful LED lights embedded in the sole that illuminate with each stride, creating an enchanting visual display. Made with breathable materials and a cushioned footbed, these sneakers ensure comfort for active play. Let your little one's personality shine with these exciting and playful shoes.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=pink-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=sand-medium",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=darkgrey-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=grey-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/24?variant=sand-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/product/12?variant=sand-small",
+      "title": "Cat-Ear Beanie",
+      "description": "Add a touch of whimsy to your winter wardrobe with our Cat Ear Beanie. Crafted from warm, soft material, this cozy beanie features adorable cat ears that stand out, making it the perfect accessory for cat lovers and fashion enthusiasts alike. Available in a variety of colors like black, grey, white, pink, and blue, this beanie not only keeps you warm but also adds a playful element to your outfit. Wear it for a casual day out, or make it your go-to accessory for those chilly evening walks. Stay warm, look cute, and let your playful side shine with our Cat Ear Beanie.",
+      "score": 2.2462636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/products?category=apparel&page=3",
+      "title": "web-scraping.dev product page 3",
+      "description": "",
+      "score": 1.9942636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/products?page=5",
+      "title": "web-scraping.dev product page 5",
+      "description": "",
+      "score": 1.9942636304508554
+    },
+    {
+      "url": "https://web-scraping.dev/products?category=household&page=5",
+      "title": "web-scraping.dev product page 5",
+      "description": "",
+      "score": 1.9942636304508554
+    }
+  ]
+}

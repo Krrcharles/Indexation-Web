@@ -580,4 +580,6 @@ if __name__ == "__main__":
     )
     
     # Print the formatted JSON output
-    print(json.dumps(results_json_dict, indent=2, ensure_ascii=False))
+    # print(json.dumps(results_json_dict, indent=2, ensure_ascii=False))
+    with open("final_results.json", "w", encoding="utf-8") as f:
+        json.dump(results_json_dict, f, indent=2, ensure_ascii=False)
