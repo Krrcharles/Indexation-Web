@@ -3,18 +3,24 @@ import math
 import string
 import os
 
-# NLTK
+# NLTK imports
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-#############################
+#################################
 # 1) FILE LOADING FUNCTIONS
-#############################
+#################################
 
 def load_json(file_path):
     """
-    Loads a JSON file and returns the corresponding dictionary.
+    Loads a JSON file and returns its content as a dictionary.
+    
+    Parameters:
+        file_path (str): Path to the JSON file.
+        
+    Returns:
+        dict: Parsed JSON content.
     """
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
@@ -23,6 +29,12 @@ def load_json(file_path):
 def load_jsonl(file_path):
     """
     Loads a JSONL file (one JSON document per line) and returns a list of dictionaries.
+    
+    Parameters:
+        file_path (str): Path to the JSONL file.
+        
+    Returns:
+        list: A list of dictionaries representing each JSON document.
     """
     data = []
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -35,8 +47,15 @@ def load_jsonl(file_path):
 
 def load_all_files():
     """
-    Loads all necessary JSON/JSONL files in the current directory
-    and returns a dictionary containing indexed data.
+    Loads all necessary JSON/JSONL files from the current directory and aggregates the data.
+    
+    Returns:
+        dict: A dictionary containing:
+              - "indexes": a dictionary with field indexes,
+              - "reviews_index": review data,
+              - "origin_synonyms": synonym mappings,
+              - "products_data": list of product documents,
+              - "rearranged_products": list of rearranged products.
     """
     current_dir = os.path.dirname(os.path.abspath(__file__))
     
@@ -81,18 +100,20 @@ def load_all_files():
         "rearranged_products": rearranged_products
     }
 
-##################################
+#################################
 # 2) TOKENIZATION & EXPANSION
-##################################
+#################################
 
 def tokenize(text):
     """
-    Tokenizes the input text:
-    - Converts to lowercase
-    - Uses NLTK's word_tokenize for tokenization
-    - Removes punctuation
-    - Removes stopwords
-    Returns a list of cleaned tokens.
+    Tokenizes the input text by converting it to lowercase, splitting into words,
+    and removing punctuation and stopwords.
+    
+    Parameters:
+        text (str): The text to tokenize.
+        
+    Returns:
+        list: A list of cleaned tokens.
     """
     text = text.lower()
     tokens = word_tokenize(text)
@@ -109,35 +130,38 @@ def tokenize(text):
 
 def expand_query_tokens(tokens, synonyms_dict):
     """
-    Expands the given tokens using a synonym dictionary.
-    If a token has synonyms, they are added as single tokens.
+    Expands the list of query tokens using the provided synonym dictionary.
     
-    Example:
-        synonyms_dict["usa"] = ["united states", "united states of america", "america"]
-        => Adds ["united states", "united states of america", "america"]
+    Parameters:
+        tokens (list): List of tokens from the query.
+        synonyms_dict (dict): Dictionary mapping tokens to their synonyms.
+        
+    Returns:
+        list: The expanded list of tokens including synonyms.
     """
     expanded_tokens = list(tokens)  # Copy original tokens
     
     for token in tokens:
         if token in synonyms_dict:
             for phrase in synonyms_dict[token]:
-                single_token = phrase.lower()
-                expanded_tokens.append(single_token)
+                expanded_tokens.append(phrase.lower())
     
     return expanded_tokens
 
-#############################
+#################################
 # 3) DOCUMENT FILTERING FUNCTIONS
-#############################
+#################################
 
 def get_documents_for_token(token, indexes):
     """
-    Retrieves all documents (URLs) containing the given token
-    in any of the indexed fields.
+    Retrieves all documents (URLs) that contain the given token in any of the field indexes.
     
-    Different fields store tokens in different formats:
-    - title, description: { token: {"url1": [positions], "url2": [positions], ...} }
-    - brand, origin, domain: { token: ["url1", "url2", ...] }
+    Parameters:
+        token (str): The token to search for.
+        indexes (dict): Dictionary of indexes by field.
+        
+    Returns:
+        set: A set of document URLs that contain the token.
     """
     docs_set = set()
     
@@ -145,11 +169,11 @@ def get_documents_for_token(token, indexes):
         if token in field_index:
             value = field_index[token]
             if isinstance(value, dict):
-                docs_set.update(value.keys())  # URLs as dictionary keys
+                docs_set.update(value.keys())
             elif isinstance(value, list):
-                docs_set.update(value)  # URLs as list elements
+                docs_set.update(value)
             else:
-                print(f"[WARN] Unexpected format for '{field_name}' / token '{token}': {type(value)}")
+                print(f"[WARN] Unexpected format for field '{field_name}' / token '{token}': {type(value)}")
     
     return docs_set
 
@@ -157,6 +181,13 @@ def get_documents_for_token(token, indexes):
 def filter_documents_any(tokens, indexes):
     """
     Returns documents that contain at least one of the given tokens (OR logic).
+    
+    Parameters:
+        tokens (list): List of tokens.
+        indexes (dict): Dictionary of indexes by field.
+        
+    Returns:
+        set: A set of document URLs matching any of the tokens.
     """
     if not tokens:
         return set()
@@ -170,6 +201,13 @@ def filter_documents_any(tokens, indexes):
 def filter_documents_all(tokens, indexes):
     """
     Returns documents that contain all of the given tokens (AND logic).
+    
+    Parameters:
+        tokens (list): List of tokens.
+        indexes (dict): Dictionary of indexes by field.
+        
+    Returns:
+        set: A set of document URLs matching all of the tokens.
     """
     if not tokens:
         return set()
@@ -184,10 +222,16 @@ def filter_documents_all(tokens, indexes):
 
 def filter_documents(query, indexes, synonyms_dict, mode="ANY"):
     """
-    Filters documents based on the query:
-    1) Tokenizes the query
-    2) Expands query tokens with synonyms
-    3) Applies filtering (ANY / ALL) and returns the matching URLs.
+    Filters documents based on the query after tokenizing and expanding with synonyms.
+    
+    Parameters:
+        query (str): The search query.
+        indexes (dict): Dictionary of indexes by field.
+        synonyms_dict (dict): Synonym dictionary for query expansion.
+        mode (str): Filtering mode, either "ANY" or "ALL".
+        
+    Returns:
+        set: A set of document URLs that match the query.
     """
     base_tokens = tokenize(query)
     tokens_expanded = expand_query_tokens(base_tokens, synonyms_dict)
@@ -196,21 +240,23 @@ def filter_documents(query, indexes, synonyms_dict, mode="ANY"):
     else:
         return filter_documents_all(tokens_expanded, indexes)
 
-#############################
-# 4) BM25 & SCORING
-#############################
-
-# --- Anciennes fonctions BM25 (get_term_frequency, compute_idf) ---
-# Elles ne sont plus utilisées dans le calcul BM25 par champ.
-# On définit ci-dessous des fonctions dédiées au calcul BM25 par champ.
+#################################
+# 4) BM25 & SCORING FUNCTIONS
+#################################
 
 def compute_field_idf(token, field_index, N):
     """
-    Calcule l'IDF (logarithmique, base 2) pour un token dans un index spécifique de champ.
+    Computes the logarithmic IDF (base 2) for a token in a specific field index.
     IDF_field(t) = log((N - n_t + 0.5) / (n_t + 0.5), base 2)
     
-    field_index: l'index du champ (dictionnaire token -> [documents] ou token -> dict(doc_url -> positions))
-    N: nombre total de documents (pour ce champ)
+    Parameters:
+        token (str): The token for which to compute the IDF.
+        field_index (dict): The index for the field (a dictionary mapping token -> [documents]
+                            or token -> dict(doc_url -> positions)).
+        N (int): Total number of documents (for this field).
+        
+    Returns:
+        float: The computed IDF value for the token.
     """
     if token not in field_index:
         return 0.0
@@ -228,15 +274,20 @@ def compute_field_idf(token, field_index, N):
 
 def bm25_field_score(doc_url, tokens, field, field_index, doc_field_lengths, avgdl_field, k=1.2, b=0.75):
     """
-    Calcule la contribution BM25 pour un document (doc_url) dans un champ donné.
+    Computes the BM25 contribution for a document (doc_url) within a specific field.
     
-    - tokens: liste de tokens de la requête.
-    - field: nom du champ (ex. "title", "description", etc.).
-    - field_index: index spécifique au champ.
-    - doc_field_lengths: dictionnaire {doc_url: longueur_du_champ (en tokens)}.
-    - avgdl_field: longueur moyenne du champ.
-    
-    Retourne la somme des contributions BM25 pour ce champ.
+    Parameters:
+        doc_url (str): The URL of the document.
+        tokens (list): List of query tokens.
+        field (str): The name of the field (e.g., "title", "description", etc.).
+        field_index (dict): The index specific to the field.
+        doc_field_lengths (dict): A dictionary mapping doc_url to the field's length (in tokens).
+        avgdl_field (float): The average length of the field.
+        k (float): BM25 parameter k (default is 1.2).
+        b (float): BM25 parameter b (default is 0.75).
+        
+    Returns:
+        float: The sum of the BM25 contributions for this field.
     """
     score = 0.0
     N = len(doc_field_lengths)
@@ -244,7 +295,7 @@ def bm25_field_score(doc_url, tokens, field, field_index, doc_field_lengths, avg
     for t in tokens:
         idf = compute_field_idf(t, field_index, N)
         
-        # Récupérer la fréquence du token dans ce champ pour le document
+        # Retrieve the frequency of the token in this field for the document
         freq = 0
         if t in field_index:
             value = field_index[t]
@@ -263,14 +314,22 @@ def bm25_field_score(doc_url, tokens, field, field_index, doc_field_lengths, avg
 
 def bm25_score(doc_url, tokens, indexes, products_data, k=1.2, b=0.75):
     """
-    Calcule le score BM25 pour un document (doc_url) en sommant les scores BM25
-    calculés séparément pour chaque champ, puis en les pondérant.
+    Computes the BM25 score for a document (doc_url) by summing the BM25 scores
+    calculated separately for each field and then weighting them.
     
-    - indexes: dictionnaire des index par champ.
-    - products_data: liste complète des produits (pour construire les longueurs de champ pour title et description).
+    Parameters:
+        doc_url (str): The URL of the document.
+        tokens (list): List of query tokens.
+        indexes (dict): Dictionary of indexes by field.
+        products_data (list): The complete list of products (used to build field lengths for "title" and "description").
+        k (float): BM25 parameter k (default is 1.2).
+        b (float): BM25 parameter b (default is 0.75).
+        
+    Returns:
+        float: The overall BM25 score for the document.
     """
     total_score = 0.0
-    # Poids par champ (vous pouvez les ajuster si nécessaire)
+    # Field weights (adjustable if needed)
     field_weights = {
         "title": 2.0,
         "description": 1.0,
@@ -279,9 +338,9 @@ def bm25_score(doc_url, tokens, indexes, products_data, k=1.2, b=0.75):
         "domain": 1.0
     }
     
-    # Pour chaque champ de l'index, calculer le BM25 spécifique au champ
+    # For each field in the index, compute the field-specific BM25 score
     for field, field_index in indexes.items():
-        # Pour les champs textuels présents dans products_data, calculer la longueur en token
+        # For textual fields in products_data, compute the token length
         if field in ["title", "description"]:
             doc_field_lengths = {}
             for product in products_data:
@@ -290,7 +349,7 @@ def bm25_score(doc_url, tokens, indexes, products_data, k=1.2, b=0.75):
                 tokens_field = tokenize(text)
                 doc_field_lengths[url] = len(tokens_field)
         else:
-            # Pour les autres champs (brand, origin, domain), on suppose une longueur par défaut de 1
+            # For other fields (brand, origin, domain), assume a default length of 1
             doc_field_lengths = {product["url"]: 1 for product in products_data}
         
         total_length = sum(doc_field_lengths.values())
@@ -305,8 +364,16 @@ def bm25_score(doc_url, tokens, indexes, products_data, k=1.2, b=0.75):
 
 def get_review_bonus(doc_url, reviews_index, max_bonus=1.0):
     """
-    Adds a bonus score proportional to the average review rating (0 to 5).
+    Adds a bonus score proportional to the average review rating (ranging from 0 to 5).
     The bonus is calculated as (mean_mark / 5) * max_bonus.
+    
+    Parameters:
+        doc_url (str): The URL of the document.
+        reviews_index (dict): Dictionary containing review data with doc_url as keys.
+        max_bonus (float): The maximum bonus score (default is 1.0).
+        
+    Returns:
+        float: The review bonus score.
     """
     if doc_url not in reviews_index:
         return 0.0
@@ -316,8 +383,16 @@ def get_review_bonus(doc_url, reviews_index, max_bonus=1.0):
 
 def is_exact_title_match(doc_url, query_tokens, products_info):
     """
-    Checks if the document's title (tokenized) exactly matches
+    Checks if the tokenized title of the document exactly matches
     the tokenized set of query terms.
+    
+    Parameters:
+        doc_url (str): The URL of the document.
+        query_tokens (list): List of query tokens.
+        products_info (dict): Dictionary {doc_url: {title: ..., description: ...}} used for exact matching.
+        
+    Returns:
+        bool: True if the tokenized title exactly matches the query tokens, False otherwise.
     """
     if doc_url not in products_info:
         return False
@@ -331,38 +406,65 @@ def is_exact_title_match(doc_url, query_tokens, products_info):
 
 def compute_final_score(doc_url, query_tokens, indexes, products_data,
                         reviews_index, products_info,
-                        alpha=1.0, beta=0.3, gamma=1.0, k=1.2, b=0.75):
+                        bm25_weight=1.0, review_weight=0.3, exact_match_weight=1.0,
+                        k=1.2, b=0.75):
     """
     Computes the final ranking score:
-    final_score = (alpha * BM25) + (beta * review_bonus) + (gamma * exact_match_indicator)
     
-    - BM25 est maintenant la somme pondérée des BM25 par champ.
-    - products_data: liste complète des produits (pour le calcul BM25 par champ).
-    - products_info: dictionnaire {doc_url: {title:..., description:...}} utilisé pour le matching exact.
+        final_score = (bm25_weight * BM25) + (review_weight * review_bonus) + (exact_match_weight * exact_match_indicator)
+    
+    where:
+      - BM25 is the weighted sum of the BM25 scores across fields.
+      - products_data is the complete list of products (used for BM25 calculation per field).
+      - products_info is a dictionary {doc_url: {title: ..., description: ...}} used for exact matching.
+    
+    Parameters:
+        doc_url (str): The URL of the document.
+        query_tokens (list): List of query tokens.
+        indexes (dict): Dictionary of indexes by field.
+        products_data (list): The complete list of products.
+        reviews_index (dict): Dictionary of review data.
+        products_info (dict): Dictionary containing product information (e.g., title and description).
+        bm25_weight (float): Weight for the BM25 score (default is 1.0).
+        review_weight (float): Weight for the review bonus (default is 0.3).
+        exact_match_weight (float): Weight for the exact title match indicator (default is 1.0).
+        k (float): BM25 parameter k (default is 1.2).
+        b (float): BM25 parameter b (default is 0.75).
+        
+    Returns:
+        float: The final ranking score for the document.
     """
     bm25_val = bm25_score(doc_url, query_tokens, indexes, products_data, k, b)
     review_b = get_review_bonus(doc_url, reviews_index, max_bonus=1.0)
     exact_m = 1.0 if is_exact_title_match(doc_url, query_tokens, products_info) else 0.0
     
-    final = alpha * bm25_val + beta * review_b + gamma * exact_m
+    final = bm25_weight * bm25_val + review_weight * review_b + exact_match_weight * exact_m
     return final
 
-#############################
+#################################
 # 5) DOCUMENT RANKING FUNCTION
-#############################
+#################################
 
-def rank_documents(query, indexes, reviews_index, products_info, products_data,
-                   synonyms_dict, mode="ANY"):
+def rank_documents(query, indexes, reviews_index, products_info, products_data, synonyms_dict, mode="ANY"):
     """
-    Ranks documents based on the query:
-    1) Filters documents using (ANY or ALL) logic.
-    2) Computes a final score (BM25 + additional signals).
-    3) Sorts the documents in descending order of score.
+    Ranks documents based on the query by filtering them and computing the final ranking score.
+    
+    Parameters:
+        query (str): The search query.
+        indexes (dict): Dictionary of indexes by field.
+        reviews_index (dict): Dictionary of review data.
+        products_info (dict): Dictionary {doc_url: {title: ..., description: ...}} for quick access.
+        products_data (list): The complete list of products.
+        synonyms_dict (dict): Synonym dictionary for query expansion.
+        mode (str): Filtering mode ("ANY" or "ALL").
+        
+    Returns:
+        list: A list of tuples (doc_url, score) sorted in descending order by score.
     """
     # Filter documents based on query and synonym expansion
     filtered_docs = filter_documents(query, indexes, synonyms_dict, mode=mode)
     
-    # Tokenize query for exact match checking
+    # Tokenize query for exact matching
     query_tokens = tokenize(query)
     
     results = []
@@ -374,84 +476,84 @@ def rank_documents(query, indexes, reviews_index, products_info, products_data,
             products_data=products_data,
             reviews_index=reviews_index,
             products_info=products_info,
-            alpha=1.0,     # BM25 weight
-            beta=0.3,      # Review score weight
-            gamma=1.0,     # Exact match weight
+            bm25_weight=1.0,         # BM25 score weight
+            review_weight=0.3,         # Review bonus weight
+            exact_match_weight=1.0,    # Exact match weight
             k=1.2,
             b=0.75
         )
         results.append((doc_url, score))
     
-    # Sort by descending score
+    # Sort results by descending score
     results.sort(key=lambda x: x[1], reverse=True)
     return results
 
-#############################
+#################################
 # 6) SEARCH RESULT JSON GENERATION
-#############################
+#################################
 
-def produce_search_results_json(query, indexes, reviews_index,
-                                products_list, synonyms_dict,
-                                mode="ANY"):
+def produce_search_results_json(query, indexes, reviews_index, products_list, synonyms_dict, mode="ANY"):
     """
-    Generates a JSON output containing ranked search results:
-    1) Prepares a dictionary {url: {title:..., description:...}} for fast access.
-    2) Ranks the documents.
-    3) Constructs the final JSON output.
+    Generates a JSON object containing the ranked search results.
+    
+    Parameters:
+        query (str): The search query.
+        indexes (dict): Dictionary of indexes by field.
+        reviews_index (dict): Dictionary of review data.
+        products_list (list): List of product dictionaries.
+        synonyms_dict (dict): Synonym dictionary for query expansion.
+        mode (str): Filtering mode ("ANY" or "ALL").
+        
+    Returns:
+        dict: A dictionary representing the search results with metadata and results.
     """
-    # Prepare dictionary for quick lookup of title and description
+    # Prepare a dictionary for quick access to product title and description
     products_data_dict = {}
-    for p in products_list:
-        products_data_dict[p["url"]] = {
-            "title": p.get("title", ""),
-            "description": p.get("description", "")
+    for product in products_list:
+        products_data_dict[product["url"]] = {
+            "title": product.get("title", ""),
+            "description": product.get("description", "")
         }
     
-    # Rank documents based on query
-    ranked_results = rank_documents(query, indexes, reviews_index,
-                                    products_data_dict, products_list, synonyms_dict, mode)
+    # Rank documents based on the query
+    ranked_results = rank_documents(query, indexes, reviews_index, products_data_dict, products_list, synonyms_dict, mode)
     
     # Construct final JSON structure
-    docs_filtered = len(ranked_results)
     output = {
         "metadata": {
             "total_documents": len(products_list),
-            "filtered_documents": docs_filtered,
+            "filtered_documents": len(ranked_results),
             "query": query
         },
         "results": []
     }
     
     for doc_url, score in ranked_results:
-        # Retrieve title and description
         title = products_data_dict[doc_url]["title"]
         description = products_data_dict[doc_url]["description"]
-        
         output["results"].append({
             "url": doc_url,
             "title": title,
             "description": description,
             "score": score
         })
-        
+    
     return output
 
-#############################
+#################################
 # 7) MAIN TEST SCRIPT
-#############################
+#################################
 
 if __name__ == "__main__":
     """
-    Main script to test the search functionality:
-    - Downloads necessary NLTK resources if not already available.
-    - Loads all required data files.
-    - Executes a sample query.
-    - Prints the formatted JSON output of the search results.
-    """
+    Main script to test the search functionality.
     
+    This script downloads the necessary NLTK resources (if not already available),
+    loads all required data files, executes a sample query, and prints the JSON
+    formatted search results.
+    """
     # Download NLTK resources if not already available
     nltk.download('punkt')
-    nltk.download('punkt_tab')
     nltk.download('stopwords')
     
     # Load all necessary files
@@ -477,5 +579,5 @@ if __name__ == "__main__":
         mode=filter_mode
     )
     
-    # Pretty print the JSON output
+    # Print the formatted JSON output
     print(json.dumps(results_json_dict, indent=2, ensure_ascii=False))
