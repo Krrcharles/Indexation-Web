@@ -12,6 +12,7 @@ from nltk.corpus import stopwords
 # 1) FILE LOADING FUNCTIONS
 #################################
 
+
 def load_json(file_path):
     """
     Loads a JSON file and returns its content as a dictionary.
@@ -104,6 +105,7 @@ def load_all_files():
 # 2) TOKENIZATION & EXPANSION
 #################################
 
+
 def tokenize(text):
     """
     Tokenizes the input text by converting it to lowercase, splitting into words,
@@ -151,6 +153,7 @@ def expand_query_tokens(tokens, synonyms_dict):
 #################################
 # 3) DOCUMENT FILTERING FUNCTIONS
 #################################
+
 
 def get_documents_for_token(token, indexes):
     """
@@ -243,6 +246,7 @@ def filter_documents(query, indexes, synonyms_dict, mode="ANY"):
 #################################
 # 4) BM25 & SCORING FUNCTIONS
 #################################
+
 
 def compute_field_idf(token, field_index, N):
     """
@@ -445,6 +449,7 @@ def compute_final_score(doc_url, query_tokens, indexes, products_data,
 # 5) DOCUMENT RANKING FUNCTION
 #################################
 
+
 def rank_documents(query, indexes, reviews_index, products_info, products_data, synonyms_dict, mode="ANY"):
     """
     Ranks documents based on the query by filtering them and computing the final ranking score.
@@ -491,6 +496,7 @@ def rank_documents(query, indexes, reviews_index, products_info, products_data, 
 #################################
 # 6) SEARCH RESULT JSON GENERATION
 #################################
+
 
 def produce_search_results_json(query, indexes, reviews_index, products_list, synonyms_dict, mode="ANY"):
     """
@@ -543,6 +549,7 @@ def produce_search_results_json(query, indexes, reviews_index, products_list, sy
 #################################
 # 7) MAIN TEST SCRIPT
 #################################
+
 
 if __name__ == "__main__":
     """
