@@ -35,7 +35,7 @@ The goal of this project is to develop a search engine that leverages previously
 
 ```
 
-search.py
+main.py
 
 ```
 
@@ -51,17 +51,6 @@ Contains the complete implementation of the search engine including:
 
 - JSON generation of the final search results.
 
-  
-
-```
-
-test_search.py (optional)
-
-```
-
-A suite of unit tests to verify the functionality of each module (not included here, but recommended for further testing).
-
-  
 
 ```
 
@@ -107,7 +96,7 @@ pip  install  nltk
 
   
 
-Ensure the following files are in the same directory as `search.py`:
+Ensure the following files are in the same directory as `main.py`:
 
   
 
@@ -123,13 +112,13 @@ Ensure the following files are in the same directory as `search.py`:
 
   
 
-Run the main search script:
+Run the main script:
 
   
 
 ```sh
 
-python  search.py
+python  main.py
 
 ```
 
